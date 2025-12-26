@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/joshuamayhugh/Projects/xv6-riscv",
-      "program": "/Users/joshuamayhugh/Projects/xv6-riscv/build/Debug/outDebug"
+      "cwd": "/Users/joshuamayhugh/Projects/xv6-riscv/user",
+      "program": "/Users/joshuamayhugh/Projects/xv6-riscv/user/build/Debug/outDebug"
     }
   ]
 }
