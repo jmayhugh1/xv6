@@ -1,25 +1,29 @@
 {
-    "version": 4,
-    "configurations": [
-      {
-        "name": "xv6-riscv",
-        "compilerPath": "/opt/homebrew/bin/riscv64-unknown-elf-gcc",
-        "cStandard": "gnu11",
-        "cppStandard": "gnu++17",
-        "intelliSenseMode": "gcc-x64",
-  
-        "includePath": [
-          "${workspaceFolder}",
-          "${workspaceFolder}/kernel",
-          "${workspaceFolder}/user"
-        ],
-  
-        "defines": [
-          "KERNEL",
-          "__riscv",
-          "__riscv_xlen=64"
-        ]
-      }
-    ]
-  }
-  
+  "version": 4,
+  "configurations": [
+    {
+      "name": "macos-clang-arm64",
+      "compilerPath": "/usr/bin/clang",
+      "intelliSenseMode": "macos-clang-arm64",
+      "cStandard": "${default}",
+      "cppStandard": "${default}",
+      "includePath": [
+        "${workspaceFolder}/**"
+      ],
+      "defines": [
+        "KERNEL"
+      ],
+      "compilerArgs": [
+        "-I.",
+        "-march=rv64gc",
+        "-mcmodel=medany",
+        "-ffreestanding",
+        "-fno-common",
+        "-nostdlib",
+        "-fno-stack-protector",
+        "-fno-pie",
+        "-no-pie"
+      ]
+    }
+  ]
+}
