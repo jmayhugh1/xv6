@@ -147,6 +147,8 @@ UPROGS=\
 	$U/_dorphan\
 	$U/_sleep\
 	$U/_pingpong\
+	$U/_memavail\
+	$U/_memavailtest\
 
 fs.img: mkfs/mkfs README $(UPROGS)
 	mkfs/mkfs fs.img README $(UPROGS)
