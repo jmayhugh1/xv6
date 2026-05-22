@@ -1,6 +1,10 @@
 {
-  "C_Cpp_Runner.cCompilerPath": "clang",
-  "C_Cpp_Runner.cppCompilerPath": "clang++",
+  "clangd.arguments": [
+    "--query-driver=/opt/homebrew/bin/riscv64-unknown-elf-*"
+  ],
+  "clangd.compilationDatabasePath": "${workspaceFolder}",
+  "C_Cpp_Runner.cCompilerPath": "/opt/homebrew/bin/riscv64-unknown-elf-gcc",
+  "C_Cpp_Runner.cppCompilerPath": "/opt/homebrew/bin/riscv64-unknown-elf-gcc",
   "C_Cpp_Runner.debuggerPath": "lldb",
   "C_Cpp_Runner.cStandard": "",
   "C_Cpp_Runner.cppStandard": "",

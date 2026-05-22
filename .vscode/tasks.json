@@ -2,6 +2,37 @@
     "version": "2.0.0",
     "tasks": [
       {
+        "label": "cmake qemu",
+        "type": "shell",
+        "command": "cmake",
+        "args": [
+          "--build",
+          "build",
+          "--target",
+          "qemu"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "group": "build",
+        "problemMatcher": [
+          "$gcc"
+        ]
+      },
+      {
+        "label": "cmake build",
+        "type": "shell",
+        "command": "cmake",
+        "args": [
+          "--build",
+          "build"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "group": "build"
+      },
+      {
         "label": "make qemu",
         "type": "shell",
         "command": "make",
