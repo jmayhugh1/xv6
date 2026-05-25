@@ -1,67 +1,83 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-      {
-        "label": "cmake qemu",
-        "type": "shell",
-        "command": "cmake",
-        "args": [
-          "--build",
-          "build",
-          "--target",
-          "qemu"
-        ],
-        "options": {
-          "cwd": "${workspaceFolder}"
-        },
-        "group": "build",
-        "problemMatcher": [
-          "$gcc"
-        ]
-      },
-      {
-        "label": "cmake build",
-        "type": "shell",
-        "command": "cmake",
-        "args": [
-          "--build",
-          "build"
-        ],
-        "options": {
-          "cwd": "${workspaceFolder}"
-        },
-        "group": "build"
-      },
-      {
-        "label": "make qemu",
-        "type": "shell",
-        "command": "make",
-        "args": [
-          "TOOLPREFIX=riscv64-unknown-elf-",
-          "qemu"
-        ],
-        "options": {
-          "cwd": "${workspaceFolder}"
-        },
-        "group": {
-          "kind": "build",
-          "isDefault": true
-        },
-        "problemMatcher": [
-          "$gcc"
-        ]
-      },
-      {
-        "label": "make clean",
-        "type": "shell",
-        "command": "make",
-        "args": [
-          "clean"
-        ],
-        "options": {
-          "cwd": "${workspaceFolder}"
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "cmake qemu",
+      "type": "shell",
+      "command": "cmake",
+      "args": ["--build", "build", "--target", "qemu"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "group": "build",
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "cmake build",
+      "type": "shell",
+      "command": "cmake",
+      "args": ["--build", "build"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "group": "build"
+    },
+    {
+      "label": "make qemu",
+      "type": "shell",
+      "command": "make",
+      "args": ["TOOLPREFIX=riscv64-unknown-elf-", "qemu"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "wait for QEMU GDB port",
+      "type": "shell",
+      "command": "${workspaceFolder}/scripts/wait-gdb-port.sh",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": {
+        "owner": "xv6",
+        "pattern": { "regexp": "^$" },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".",
+          "endsPattern": "GDB_STUB_READY"
         }
       }
-    ]
-  }
-  
+    },
+    {
+      "label": "make qemu-gdb",
+      "type": "shell",
+      "dependsOn": ["make"],
+      "dependsOrder": "sequence",
+      "command": "bash",
+      "args": [
+        "-c",
+        "cd \"${workspaceFolder}\" && make qemu-gdb & \"${workspaceFolder}/scripts/wait-gdb-port.sh\""
+      ],
+      "options": { "cwd": "${workspaceFolder}" },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "xv6",
+        "pattern": { "regexp": "^$" },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".",
+          "endsPattern": "GDB_STUB_READY"
+        }
+      },
+      "presentation": { "reveal": "always", "panel": "dedicated", "focus": false }
+    },
+    {
+      "label": "make",
+      "type": "shell",
+      "command": "make",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "make clean",
+      "type": "shell",
+      "command": "make",
+      "args": ["clean"],
+      "options": { "cwd": "${workspaceFolder}" }
+    }
+  ]
+}

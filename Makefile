@@ -160,7 +160,7 @@ clean:
 	rm -f *.tex *.dvi *.idx *.aux *.log *.ind *.ilg \
 	*/*.o */*.d */*.asm */*.sym \
 	$K/kernel fs.img \
-	mkfs/mkfs .gdbinit \
+	mkfs/mkfs xv6.gdb \
         $U/usys.S \
 	$(UPROGS)
 
@@ -168,7 +168,7 @@ clean:
 GDBPORT = $(shell expr `id -u` % 5000 + 25000)
 # QEMU's gdb stub command line changed in 0.11
 QEMUGDB = $(shell if $(QEMU) -help | grep -q '^-gdb'; \
-	then echo "-gdb tcp::$(GDBPORT)"; \
+	then echo "-gdb tcp:127.0.0.1:$(GDBPORT)"; \
 	else echo "-s -p $(GDBPORT)"; fi)
 ifndef CPUS
 CPUS := 3
@@ -182,11 +182,13 @@ QEMUOPTS += -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0
 qemu: check-qemu-version $K/kernel fs.img
 	$(QEMU) $(QEMUOPTS)
 
-.gdbinit: .gdbinit.tmpl-riscv
+xv6.gdb: .gdbinit.tmpl-riscv
 	sed "s/:1234/:$(GDBPORT)/" < $^ > $@
+	echo "cd $(CURDIR)" >> $@
+	echo "source gdb-symbols.gdb" >> $@
 
-qemu-gdb: $K/kernel .gdbinit fs.img
-	@echo "*** Now run 'gdb' in another window." 1>&2
+qemu-gdb: $K/kernel xv6.gdb fs.img
+	@echo "*** Now run 'riscv64-elf-gdb -x xv6.gdb' in another window." 1>&2
 	$(QEMU) $(QEMUOPTS) -S $(QEMUGDB)
 
 print-gdbport:

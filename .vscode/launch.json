@@ -2,6 +2,49 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Debug xv6 (kernel + user)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/kernel/kernel",
+      "cwd": "${workspaceFolder}",
+      "miDebuggerPath": "/opt/homebrew/bin/riscv64-elf-gdb",
+      "miDebuggerArgs": "-nx",
+      "MIMode": "gdb",
+      "stopAtEntry": false,
+      "preLaunchTask": "make qemu-gdb",
+      "setupCommands": [
+        {
+          "text": "file ${workspaceFolder}/kernel/kernel",
+          "ignoreFailures": false
+        },
+        {
+          "text": "source ${workspaceFolder}/xv6.gdb",
+          "ignoreFailures": false
+        }
+      ]
+    },
+    {
+      "name": "Attach to xv6 (QEMU already running)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/kernel/kernel",
+      "cwd": "${workspaceFolder}",
+      "miDebuggerPath": "/opt/homebrew/bin/riscv64-elf-gdb",
+      "miDebuggerArgs": "-nx",
+      "MIMode": "gdb",
+      "preLaunchTask": "wait for QEMU GDB port",
+      "setupCommands": [
+        {
+          "text": "file ${workspaceFolder}/kernel/kernel",
+          "ignoreFailures": false
+        },
+        {
+          "text": "source ${workspaceFolder}/xv6.gdb",
+          "ignoreFailures": false
+        }
+      ]
+    },
+    {
       "name": "C/C++ Runner: Debug Session",
       "type": "lldb",
       "request": "launch",
