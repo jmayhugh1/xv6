@@ -1,0 +1,17 @@
+CompileFlags:
+  Add:
+    - -Ikernel
+    - -ffreestanding
+    - --target=riscv64-unknown-elf
+
+---
+If:
+  PathMatch: kernel/(defs|proc)\\.h
+CompileFlags:
+  Add:
+    - -include
+    - types.h
+    - -include
+    - param.h
+    - -include
+    - riscv.h

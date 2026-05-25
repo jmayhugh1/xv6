@@ -57,6 +57,22 @@ for path in sorted(glob.glob("kernel/*.S")):
         "output": f"kernel/{base}.o",
     })
 
+# IDE-only: type-check defs.h (included after types.h/riscv.h in real builds).
+commands.append({
+    "file": "kernel/defs.h",
+    "arguments": [
+        CC,
+        "-Wall", "-Wno-unknown-attributes", "-ffreestanding",
+        "-march=rv64gc", "-mcmodel=medany",
+        "-I.", "-Ikernel",
+        "-fsyntax-only",
+        "-include", "types.h",
+        "-include", "riscv.h",
+        "kernel/defs.h",
+    ],
+    "directory": DIR,
+})
+
 with open("compile_commands.json", "w") as f:
     json.dump(commands, f, indent=2)
     f.write("\n")

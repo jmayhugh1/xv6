@@ -8,12 +8,15 @@
       "cStandard": "${default}",
       "cppStandard": "${default}",
       "includePath": [
-        "${workspaceFolder}/**"
+        "${workspaceFolder}",
+        "${workspaceFolder}/kernel"
       ],
       "compilerArgs": [
         "-I${workspaceFolder}",
+        "-I${workspaceFolder}/kernel",
         "-ffreestanding"
-      ]
+      ],
+      "compileCommands": "${workspaceFolder}/compile_commands.json"
     }
   ]
 }
