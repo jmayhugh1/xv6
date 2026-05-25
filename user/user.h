@@ -1,7 +1,10 @@
 #include "kernel/types.h"
+#include "kernel/memlayout.h"
 #define SBRK_ERROR ((char *)-1)
 
 struct stat;
+
+struct usyscall;
 
 // system calls
 int fork(void);
@@ -21,7 +24,6 @@ int link(const char*, const char*);
 int mkdir(const char*);
 int chdir(const char*);
 int dup(int);
-int getpid(void);
 char* sys_sbrk(int,int);
 int pause(int);
 int uptime(void);
@@ -41,6 +43,7 @@ int memcmp(const void *, const void *, uint);
 void *memcpy(void *, const void *, uint);
 char* sbrk(int);
 char* sbrklazy(int);
+int getpid(void);
 
 // printf.c
 void fprintf(int, const char*, ...) __attribute__ ((format (printf, 2, 3)));

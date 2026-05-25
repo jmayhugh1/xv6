@@ -1,5 +1,8 @@
 #ifndef MEMLAYOUT_H
 #define MEMLAYOUT_H
+struct usyscall {
+  int pid;
+};
 
 // Physical memory layout
 
@@ -60,5 +63,6 @@
 //   TRAPFRAME (p->trapframe, used by the trampoline)
 //   TRAMPOLINE (the same page as in the kernel)
 #define TRAPFRAME (TRAMPOLINE - PGSIZE)
+#define USYSCALL (TRAMPOLINE - 2*PGSIZE)
 
 #endif // MEMLAYOUT_H
